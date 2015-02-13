@@ -1,5 +1,3 @@
-__author__ = "canillas"
-__date__ = "$13 fevr. 2015 09:55:06$"
 
 import sys
 import socket

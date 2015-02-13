@@ -2,12 +2,15 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__ = "canillas"
-__date__ = "$13 fevr. 2015 14:37:21$"
+
 
 import pythonbot
+import pythonbotO
 
 
 if __name__ == "__main__":
     
-    pythonbot.run()
+    MonBot =  pythonbotO.Pybot()
+    MonBot.runRead(MonBot.connect())
+    
+    

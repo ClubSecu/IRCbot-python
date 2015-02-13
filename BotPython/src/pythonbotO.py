@@ -2,9 +2,6 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-__author__ = "canillas"
-__date__ = "$13 fevr. 2015 14:42:01$"
-
 
 import socket
 
@@ -19,11 +16,12 @@ class Pybot:
         self.readbuffer=""
         self.s=s=socket.socket()
         
+        
     def connect():
         s.connect((HOST, PORT))
         s.send("NICK %s\r\n" % NICK)
         s.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
-        out; 
+        out=""; 
         
         while out!="PING":
             readbuffer=readbuffer+s.recv(1024)
@@ -37,17 +35,23 @@ class Pybot:
                 if(line[0]=="PING"):
                     s.send("PONG %s\r\n" % line[1])
                     out="PING"
-            
-                print(line)
                 
-    def run(sock):
+            
+            return s    
+                
+    def runRead(sock):
         
         while 1:
-            readbuffer=readbuffer+s.recv(1024)
+            readbuffer=readbuffer+sock.recv(1024)
             temp=string.split(readbuffer, "\n")
-            readbuffer=temp.pop( )
+            readbuffer=temp.pop()
+        
+        for line in temp:
+            line=string.rstrip(line)
+            line=string.split(line)
             
+            print(line)
             
-            
+               
         return 0
  
