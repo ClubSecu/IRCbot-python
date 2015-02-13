@@ -38,5 +38,16 @@ class Pybot:
                     s.send("PONG %s\r\n" % line[1])
                     out="PING"
             
-                return s
+                print(line)
+                
+    def run(sock):
+        
+        while 1:
+            readbuffer=readbuffer+s.recv(1024)
+            temp=string.split(readbuffer, "\n")
+            readbuffer=temp.pop( )
+            
+            
+            
+        return 0
  

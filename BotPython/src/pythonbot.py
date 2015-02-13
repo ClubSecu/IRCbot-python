@@ -8,7 +8,7 @@ import string
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
-    NICK="Sp1p3-Bot3000"
+    NICK="Sp1p3-BotNomekrax"
     IDENT="BOT"
     REALNAME="Sp1p3-Bot"
     readbuffer=""
