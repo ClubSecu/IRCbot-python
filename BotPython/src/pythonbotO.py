@@ -25,7 +25,7 @@ class Pybot:
         s.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
         out=[]; 
         
-        while !(line[0]=="PING"):
+        while (line[0]=="PING"):
             readbuffer=readbuffer+s.recv(1024)
             temp=string.split(readbuffer, "\n")
             readbuffer=temp.pop( )
@@ -39,4 +39,15 @@ class Pybot:
                     out[0]="PING"
             
                 print(line)
+                
+    def run(sock):
+        
+        while 1:
+            readbuffer=readbuffer+s.recv(1024)
+            temp=string.split(readbuffer, "\n")
+            readbuffer=temp.pop( )
+            
+            
+            
+        return 0
  
