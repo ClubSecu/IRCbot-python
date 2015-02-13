@@ -23,9 +23,9 @@ class Pybot:
         s.connect((HOST, PORT))
         s.send("NICK %s\r\n" % NICK)
         s.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
-        out=[]; 
+        out; 
         
-        while !(line[0]=="PING"):
+        while out!="PING":
             readbuffer=readbuffer+s.recv(1024)
             temp=string.split(readbuffer, "\n")
             readbuffer=temp.pop( )
@@ -36,7 +36,7 @@ class Pybot:
 
                 if(line[0]=="PING"):
                     s.send("PONG %s\r\n" % line[1])
-                    out[0]="PING"
+                    out="PING"
             
-                print(line)
+                return s
  
