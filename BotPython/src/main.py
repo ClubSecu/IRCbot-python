@@ -5,5 +5,9 @@
 __author__ = "canillas"
 __date__ = "$13 fevr. 2015 14:37:21$"
 
+import pythonbot
+
+
 if __name__ == "__main__":
-    print ("Toto")
+    
+    pythonbot.run()
