@@ -17,11 +17,15 @@ def toto(line,s):
 def readline(line,d):
     
     message=""
-    #je traite les  privmsg et les join
+    #je traite les  privmsg et les join et les ping FAIRE UN CASE SWITCH
+    
+    #ajout d un champ type toujours present pour faire du traitement sur les 
+    #types d'action
+    
     
     # la taille du tableau est fixe je peux donc forger mon dictionnaire
     if (line[0]=="PING"):
-        d = dict(usr ='serv',act='ping',src=line[1])
+        d = dict(id=0,usr ='serv',act='ping',src=line[1])
         return d 
     #la taille du tableau est variable     
     if (line[1]=="PRIVMSG"):
@@ -37,13 +41,28 @@ def readline(line,d):
             message = message+word+" "
         #j'enleve le premiere caractere ":" pour avoir un message parsable 
         message=string.lstrip(message,':')
-        d=dict( usr = user, act = action, src = source, msg = message)     
+        d=dict( id = 1,usr = user, act = action, src = source, msg = message)     
         return d
     #la taille du tableau est fixe je peux donc forger mon dictionnaire
     if (line[1]=="JOIN"):
-        d=dict(usr=line[0],act=line[1],whr=line[2])
+        d=dict(id=2,usr=line[0],act=line[1],whr=line[2])
         return d
         
+def answer(d,s):
+    user=""
+    
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    s.send("PRIVMSG %s %s \r\n" %(d['src'],d['msg'])) 
+                else:  #si le message est prive
+                    user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le log
+                    print(user,id)
+                    user=string.lstrip(user,':') # j'enleve le caractere ":" 
+                    s.send("PRIVMSG %s %s \r\n" %(user,d['msg'])) 
+    
 
 def run():
     HOST="irc.clubsecu.fr"
@@ -52,6 +71,7 @@ def run():
     IDENT="BOT"
     REALNAME="Sp1p3-Bot"
     readbuffer=""
+    
     d=dict()
 
 
@@ -80,6 +100,9 @@ def run():
           #debut des actions avec "line" comme flux de donnee 
 
             toto(line,s)        
-            tata(line,s)        
-            print(readline(line, d))
+            tata(line,s)       
+            d = readline(line, d)
+            print(d)
+            answer(d,s)
+            
            
