@@ -59,10 +59,28 @@ def answer(d,s):
                     s.send("PRIVMSG %s %s \r\n" %(d['src'],d['msg'])) 
                 else:  #si le message est prive
                     user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le log
-                    print(user,id)
+                    #print(user,id)
                     user=string.lstrip(user,':') # j'enleve le caractere ":" 
                     s.send("PRIVMSG %s %s \r\n" %(user,d['msg'])) 
     
+
+def salut(d,s):
+    user=""
+    message=""
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'JOIN'): # je check l'action est bien join
+                    user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
+                    print(user,id)
+                    user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
+                    message = "Bienvenu dans le chat "+user 
+                    target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
+                    
+                    s.send("PRIVMSG %s %s \r\n" %(target,message)) 
+    
+    
+    
+
 
 def run():
     HOST="irc.clubsecu.fr"
@@ -73,9 +91,6 @@ def run():
     readbuffer=""
     
     d=dict()
-
-
-
     s=socket.socket( )
     s.connect((HOST, PORT))
     s.send("NICK %s\r\n" % NICK)
@@ -99,10 +114,10 @@ def run():
           
           #debut des actions avec "line" comme flux de donnee 
 
-            toto(line,s)        
-            tata(line,s)       
+      
             d = readline(line, d)
             print(d)
             answer(d,s)
+            salut(d, s)
             
            

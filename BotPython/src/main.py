@@ -10,7 +10,7 @@ import pythonbotO
 
 if __name__ == "__main__":
     
-    MonBot =  pythonbotO.Pybot()
-    MonBot.runRead(MonBot.connect())
+
     
+    pythonbot.run()
     

@@ -14,7 +14,7 @@ class Pybot:
         self.IDENT = IDENT
         self.REALNAME = REALNAME
         self.readbuffer=""
-        self.s=s=socket.socket()
+        self.soc=s=socket.socket()
         
         
     def connect():
@@ -46,9 +46,9 @@ class Pybot:
             temp=string.split(readbuffer, "\n")
             readbuffer=temp.pop()
         
-        for line in temp:
-            line=string.rstrip(line)
-            line=string.split(line)
+            for line in temp:
+                line=string.rstrip(line)
+                line=string.split(line)
             
             print(line)
             
