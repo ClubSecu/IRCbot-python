@@ -78,10 +78,11 @@ def salut(d,s):
                     message = "Bienvenu dans le chat "+user 
                     target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
                     s.send("PRIVMSG %s %s \r\n" %(target,message)) #je salue la personne 
-                    opmessage=""+user+" est arrive sur #resir faut-il  l'ajouter "+user+" au chan clubsecu ?  via la commande - /sajoin "+user+" #club secu" 
+                    
+                    opmessage="!!!"+user+"join #chan. Member of Club Secu ?"  
                     s.send("PRIVMSG %s %s \r\n" %(ope,opmessage)) #j'envoie un mp a Nomekrax pour la mettre au club secu 
-                    
-                    
+                    opmessage=" - /sajoin "+user+" #club secu"
+                    s.send("PRIVMSG %s %s \r\n" %(ope,opmessage))
                     
     
 def run():
