@@ -81,7 +81,7 @@ def salut(d,s):
                     
                     opmessage="!!!"+user+"join #chan. Member of Club Secu ?"  
                     s.send("PRIVMSG %s %s \r\n" %(ope,opmessage)) #j'envoie un mp a Nomekrax pour la mettre au club secu 
-                    opmessage=" - /sajoin "+user+" #club secu"
+                    opmessage=" - /sajoin "+user+" #clubsecu"
                     s.send("PRIVMSG %s %s \r\n" %(ope,opmessage))
                     
     
