@@ -14,7 +14,7 @@ def toto(line,s):
         if(word ==":TOTO"):
             s.send("PRIVMSG #resir TATA \r\n")
 
-def readline(line,d):
+def readline(line,d): #ne gere que PING, PVMSG et JOIN
     
     message=""
     #je traite les  privmsg et les join et les ping FAIRE UN CASE SWITCH
@@ -67,6 +67,8 @@ def answer(d,s):
 def salut(d,s):
     user=""
     message=""
+    ope="Nomekrax"
+    opmessage=""
     if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'JOIN'): # je check l'action est bien join
@@ -75,13 +77,13 @@ def salut(d,s):
                     user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
                     message = "Bienvenu dans le chat "+user 
                     target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
+                    s.send("PRIVMSG %s %s \r\n" %(target,message)) #je salue la personne 
+                    opmessage=""+user+" est arrive sur #resir faut-il  l'ajouter "+user+" au chan clubsecu ?  via la commande - /sajoin "+user+" #club secu" 
+                    s.send("PRIVMSG %s %s \r\n" %(ope,opmessage)) #j'envoie un mp a Nomekrax pour la mettre au club secu 
                     
-                    s.send("PRIVMSG %s %s \r\n" %(target,message)) 
+                    
+                    
     
-    
-    
-
-
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
@@ -117,7 +119,7 @@ def run():
       
             d = readline(line, d)
             print(d)
-            answer(d,s)
+            #answer(d,s)
             salut(d, s)
             
            
