@@ -125,12 +125,13 @@ def run():
     s.send("NICK %s\r\n" % NICK)
     s.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
     
-    fichierusersec=open("Users","r")
+    fichierusersec=open("Users","r") #lien du fichier et mode ici r = read , w = write
     #fichierop=open("OP","r")
     usersec = fichierusersec.read()
     usersec = usersec.split("\n")
     fichierusersec.close
     
+    #lecture du ficher contenant les membres du clubs secu et mise de ceux-ci dans un tableau 
     
     
     
