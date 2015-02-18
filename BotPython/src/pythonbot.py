@@ -2,6 +2,7 @@
 import sys
 import socket
 import string
+import os
 
 def tata(line,s):
     for word in line: 
@@ -78,12 +79,36 @@ def salut(d,s):
                     message = "Bienvenu dans le chat "+user 
                     target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
                     s.send("PRIVMSG %s %s \r\n" %(target,message)) #je salue la personne 
+
                     
-                    opmessage="!!!"+user+"join #chan. Member of Club Secu ?"  
-                    s.send("PRIVMSG %s %s \r\n" %(ope,opmessage)) #j'envoie un mp a Nomekrax pour la mettre au club secu 
-                    opmessage=" - /sajoin "+user+" #clubsecu"
-                    s.send("PRIVMSG %s %s \r\n" %(ope,opmessage))
+def joinClubSecu(d,s,usersec):
+     
+    user=""
+    message=""
+    ope="Nomekrax"
+    opmessage=""
+    buff=""
+    chan="#resir"
+    
+    #print(usersec)
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'JOIN'): # je check l'action est bien join
+                    user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
+                    print(user,id)
+                    user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
+                    message = "Bienvenu dans le chat "+user 
+                    target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
                     
+                    if (user in usersec): #je verifie que l'user est bien dans la liste des Users
+                        opmessage="!!! "+user+" join "+chan+" ; Member of Club Secu ?"  
+                        s.send("PRIVMSG %s %s \r\n" %(ope,opmessage)) #j'envoie un mp a Nomekrax pour la mettre au club secu 
+                        opmessage=" - /sajoin "+user+" #clubsecu"
+                        s.send("PRIVMSG %s %s \r\n" %(ope,opmessage))
+                    
+    
+
+    
     
 def run():
     HOST="irc.clubsecu.fr"
@@ -93,11 +118,26 @@ def run():
     REALNAME="Sp1p3-Bot"
     readbuffer=""
     
+    
     d=dict()
     s=socket.socket( )
     s.connect((HOST, PORT))
     s.send("NICK %s\r\n" % NICK)
     s.send("USER %s %s bla :%s\r\n" % (IDENT, HOST, REALNAME))
+    
+    fichierusersec=open("Users","r")
+    #fichierop=open("OP","r")
+    usersec = fichierusersec.read()
+    usersec = usersec.split("\n")
+    fichierusersec.close
+    
+    
+    
+    
+    
+
+
+
 
     while 1:
         readbuffer=readbuffer+s.recv(1024)
@@ -122,5 +162,9 @@ def run():
             print(d)
             #answer(d,s)
             salut(d, s)
+            
+            joinClubSecu(d,s,usersec)
+            
+           
             
            
