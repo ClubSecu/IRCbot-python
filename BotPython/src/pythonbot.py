@@ -219,7 +219,7 @@ def bite(d,s):
                    
 
 
-def md5(d,s):
+def md5(d,s):#commentaire a faire 
      if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
@@ -238,7 +238,7 @@ def md5(d,s):
                             print message
                             s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
                            
-def sha512(d,s):
+def sha512(d,s): #commentaire a faire
      if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
@@ -254,11 +254,29 @@ def sha512(d,s):
                             m.update(msg1[1])
                             message = m.hexdigest()  
                             message ="le code sha512 de "+msg1[1]+" est "+message
-                            print message
+                            #print message
                             s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
     
     
     
+def rulesacc(d,s): #commentaire a changer
+        if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!rulesacc "):
+                       
+                            fichiercitation=open("Ferengie","r")
+                            citation=fichiercitation.read()
+                            citation=citation.split("\n")
+                            fichiercitation.close
+                            rand = random.randint(0,len(citation))
+                            message = citation[rand-1]
+                            s.send("PRIVMSG #resir %s \r\n" %(message))
+    
+
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
@@ -321,6 +339,8 @@ def run():
             rules(d,s)
             md5(d,s)
             sha512(d,s)
+            rulesacc(d,s)
+          
             
             
            
