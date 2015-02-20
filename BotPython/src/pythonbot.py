@@ -109,26 +109,86 @@ def joinClubSecu(d,s,usersec):
                     
     
 
-def citation(d,s):
+def citationLecture(d,s):
     if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
                 
                 if (d['src'][0] == '#'):  #si le message est sur un salon
-                    print(d['msg'])
+                   
                     if(d['msg'] == "!citation "):
-                        print("hello")
+                       
                         fichiercitation=open("Citation","r")
                         citation=fichiercitation.read()
                         citation=citation.split("\n")
                         fichiercitation.close
                         rand = random.randint(0,len(citation))
-                        message = citation[rand]
+                        message = citation[rand-1]
+                        print(rand)
                         s.send("PRIVMSG #resir %s \r\n" %(message))
                       
+
+def citationEcriture(d,s):
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                    msg1=d['msg'].split(" ")
+                    print(msg1)
+                    print(len(msg1))
+                    if (msg1[0]=="!q"):
+                        if (len(msg1) == 2):
+                            fichiercitation=open("Citation","r")
+                            citation=fichiercitation.read()
+                            citation=citation.split("\n")
+                            fichiercitation.close
+                            rand = random.randint(0,len(citation))
+                            message = citation[rand-2]
+                            print(rand)
+                            s.send("PRIVMSG #resir %s \r\n" %(message))
+                        if (len(msg1)>=3): 
+                            user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
+                            print(user,id)
+                            user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
+                            msg1.pop(0) #je vire le !citation
+                            print msg1
+                            msg2=""
+                            for i in range(len(msg1)):
+                                msg2=msg2+" "+msg1[i]
+                                
+                            print msg2
+                            
+                            msg2 = user+" a dit \""+msg2+"\"\n"
+                            fichiercitation=open("Citation","a")
+                            fichiercitation.write(msg2)
+                            fichiercitation.close
+                            s.send("PRIVMSG #resir Citation Enregistree \r\n" )
+                      
+
+                                              
                        
                        
+                       
+def bite(d,s):
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
                     
+                    if(d['msg'] == "!bite "):
+                        
+                        fichiercitation=open("Citation","r")
+                        citation=fichiercitation.read()
+                        citation=citation.split("\n")
+                        fichiercitation.close
+                        rand = random.randint(0,len(citation))
+                        
+                        message = "Justin say BITE"
+                        s.send("PRIVMSG #resir %s \r\n" %(message))
+        
                 
                    
 
@@ -187,7 +247,9 @@ def run():
             #salut(d, s)
             
             joinClubSecu(d,s,usersec)
-            citation(d, s)
+            #citationLecture(d, s)
+            citationEcriture(d,s)
+            bite(d, s)
             
            
             
