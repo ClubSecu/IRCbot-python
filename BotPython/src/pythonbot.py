@@ -3,6 +3,7 @@ import sys
 import socket
 import string
 import os
+import random
 
 def tata(line,s):
     for word in line: 
@@ -108,8 +109,29 @@ def joinClubSecu(d,s,usersec):
                     
     
 
-    
-    
+def citation(d,s):
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    print(d['msg'])
+                    if(d['msg'] == "!citation "):
+                        print("hello")
+                        fichiercitation=open("Citation","r")
+                        citation=fichiercitation.read()
+                        citation=citation.split("\n")
+                        fichiercitation.close
+                        rand = random.randint(0,len(citation))
+                        message = citation[rand]
+                        s.send("PRIVMSG #resir %s \r\n" %(message))
+                      
+                       
+                       
+                    
+                
+                   
+
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
@@ -162,9 +184,10 @@ def run():
             d = readline(line, d)
             print(d)
             #answer(d,s)
-            salut(d, s)
+            #salut(d, s)
             
             joinClubSecu(d,s,usersec)
+            citation(d, s)
             
            
             
