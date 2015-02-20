@@ -4,6 +4,7 @@ import socket
 import string
 import os
 import random
+import hashlib
 
 def tata(line,s):
     for word in line: 
@@ -128,7 +129,7 @@ def citationLecture(d,s):
                         s.send("PRIVMSG #resir %s \r\n" %(message))
                       
 
-def rules(d,s):
+def rules(d,s): #commentaire a changer
         if (d != None): # je verifie que mon dicto n'est pas vide
             if 'act' in d: #je verifie que mon dictio est bien forme
                 if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
@@ -217,6 +218,47 @@ def bite(d,s):
                 
                    
 
+
+def md5(d,s):
+     if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    msg1=d['msg'].split(" ")  #on decoupe 
+                    print(msg1)
+                    #print(len(msg1))
+                    if (msg1[0]=="!md5"):  #ici pour modifier le mode de commande (ici !q)
+                        if (len(msg1) == 3):
+                            
+                            m= hashlib.md5()
+                            m.update(msg1[1])
+                            message = m.hexdigest()  
+                            message ="le code md5 de "+msg1[1]+" est "+message
+                            print message
+                            s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
+                           
+def sha512(d,s):
+     if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    msg1=d['msg'].split(" ")  #on decoupe 
+                    print(msg1)
+                    #print(len(msg1))
+                    if (msg1[0]=="!sha512"):  #ici pour modifier le mode de commande (ici !q)
+                        if (len(msg1) == 3):
+                            
+                            m= hashlib.sha512()
+                            m.update(msg1[1])
+                            message = m.hexdigest()  
+                            message ="le code sha512 de "+msg1[1]+" est "+message
+                            print message
+                            s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
+    
+    
+    
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
@@ -277,6 +319,9 @@ def run():
             bite(d, s)
             noob(d, s)
             rules(d,s)
+            md5(d,s)
+            sha512(d,s)
+            
             
            
             
