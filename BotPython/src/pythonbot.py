@@ -134,37 +134,37 @@ def citationEcriture(d,s):
             if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
                 
                 if (d['src'][0] == '#'):  #si le message est sur un salon
-                   
-                    msg1=d['msg'].split(" ")
-                    print(msg1)
-                    print(len(msg1))
-                    if (msg1[0]=="!q"):
+                    msg1=d['msg'].split(" ")  #on decoupe 
+                    #print(msg1)
+                    #print(len(msg1))
+                    if (msg1[0]=="!q"):  #ici pour modifier le mode de commande (ici !q)
                         if (len(msg1) == 2):
-                            fichiercitation=open("Citation","r")
-                            citation=fichiercitation.read()
-                            citation=citation.split("\n")
-                            fichiercitation.close
-                            rand = random.randint(0,len(citation))
-                            message = citation[rand-2]
-                            print(rand)
-                            s.send("PRIVMSG #resir %s \r\n" %(message))
+                            fichiercitation=open("Citation","r") # j'ouvre le fichier des citations
+                            citation=fichiercitation.read()  #j'extrait les citations
+                            citation=citation.split("\n")#je les formates dans un tableau 
+                            fichiercitation.close # je ferme le fichier
+                            rand = random.randint(0,len(citation))  #j'en choisis une au hasard
+                            message = citation[rand-1] #je la sauvegarde dans une variable pour traitement ? 
+                            #print(rand)
+                            s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
                         if (len(msg1)>=3): 
                             user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
                             print(user,id)
                             user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
-                            msg1.pop(0) #je vire le !citation
-                            print msg1
+                            msg1.pop(0) #je vire le !q
+                            #print msg1
                             msg2=""
-                            for i in range(len(msg1)):
+                            for i in range(len(msg1)): #je reconcatene le message dans une variable
                                 msg2=msg2+" "+msg1[i]
                                 
-                            print msg2
-                            
-                            msg2 = user+" a dit \""+msg2+"\"\n"
-                            fichiercitation=open("Citation","a")
-                            fichiercitation.write(msg2)
+                            #print msg2
+                            msg2=msg2+"\n" #j'ajoute un saut de ligne 
+                            #msg2 = user+" a dit \""+msg2+"\"\n"
+                            fichiercitation=open("Citation","a") #j'ouvre le ficher en mode "j'ecris apres"
+                            fichiercitation.write(msg2) # j'ecrit le message 
                             fichiercitation.close
-                            s.send("PRIVMSG #resir Citation Enregistree \r\n" )
+                            s.send("PRIVMSG #resir Citation enregistree \r\n" ) #affichage sur resir d'un message de confirmation
+                            
                       
 
                                               
