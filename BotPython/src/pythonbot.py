@@ -75,7 +75,7 @@ def salut(d,s):
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'JOIN'): # je check l'action est bien join
                     user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
-                    print(user,id)
+                    #print(user,id)
                     user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
                     message = "Bienvenu dans le chat "+user 
                     target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
@@ -128,6 +128,24 @@ def citationLecture(d,s):
                         s.send("PRIVMSG #resir %s \r\n" %(message))
                       
 
+def rules(d,s):
+        if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!rules "):
+                       
+                            fichiercitation=open("Rules","r")
+                            citation=fichiercitation.read()
+                            citation=citation.split("\n")
+                            fichiercitation.close
+                            rand = random.randint(0,len(citation))
+                            message = citation[rand-1]
+                            print(rand)
+                            s.send("PRIVMSG #resir %s \r\n" %(message))
+
 def citationEcriture(d,s):
     if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
@@ -166,8 +184,21 @@ def citationEcriture(d,s):
                             s.send("PRIVMSG #resir Citation enregistree \r\n" ) #affichage sur resir d'un message de confirmation
                             
                       
-
-                                              
+def noob(d,s):
+    
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    
+                    if(d['msg'] == "!noob "):
+                        message = "\"With great power comes great IR-responsabilities\""
+                        s.send("PRIVMSG #resir %s \r\n" %(message))
+    
+    
+    
+    
                        
                        
                        
@@ -180,13 +211,7 @@ def bite(d,s):
                     
                     if(d['msg'] == "!bite "):
                         
-                        fichiercitation=open("Citation","r")
-                        citation=fichiercitation.read()
-                        citation=citation.split("\n")
-                        fichiercitation.close
-                        rand = random.randint(0,len(citation))
-                        
-                        message = "Justin say BITE"
+                        message = "Nomekrax say BITE"
                         s.send("PRIVMSG #resir %s \r\n" %(message))
         
                 
@@ -250,6 +275,8 @@ def run():
             #citationLecture(d, s)
             citationEcriture(d,s)
             bite(d, s)
+            noob(d, s)
+            rules(d,s)
             
            
             
