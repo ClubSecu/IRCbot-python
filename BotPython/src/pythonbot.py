@@ -212,7 +212,7 @@ def bite(d,s):
                     
                     if(d['msg'] == "!bite "):
                         
-                        message = "Nomekrax say BITE"
+                        message = "Nomekrax say BITE it, just BITE it"
                         s.send("PRIVMSG #resir %s \r\n" %(message))
         
                 
@@ -226,7 +226,7 @@ def md5(d,s):#commentaire a faire
                 
                 if (d['src'][0] == '#'):  #si le message est sur un salon
                     msg1=d['msg'].split(" ")  #on decoupe 
-                    print(msg1)
+                    #print(msg1)
                     #print(len(msg1))
                     if (msg1[0]=="!md5"):  #ici pour modifier le mode de commande (ici !q)
                         if (len(msg1) == 3):
@@ -235,7 +235,7 @@ def md5(d,s):#commentaire a faire
                             m.update(msg1[1])
                             message = m.hexdigest()  
                             message ="le code md5 de "+msg1[1]+" est "+message
-                            print message
+                            #print message
                             s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
                            
 def sha512(d,s): #commentaire a faire
@@ -245,7 +245,7 @@ def sha512(d,s): #commentaire a faire
                 
                 if (d['src'][0] == '#'):  #si le message est sur un salon
                     msg1=d['msg'].split(" ")  #on decoupe 
-                    print(msg1)
+                    #print(msg1)
                     #print(len(msg1))
                     if (msg1[0]=="!sha512"):  #ici pour modifier le mode de commande (ici !q)
                         if (len(msg1) == 3):
