@@ -280,9 +280,7 @@ def rulesacc(d,s): #commentaire a changer
 def netsec(d,s): #commentaire a faire 
     
 
-    #submissions=[str(x) for x in submissions]
-
-    
+      
     
     if (d != None): # je verifie que mon dicto n'est pas vide
             if 'act' in d: #je verifie que mon dictio est bien forme
@@ -303,7 +301,24 @@ def netsec(d,s): #commentaire a faire
                                 s.send("PRIVMSG #resir "+link+"\n")
                                 
     
+def netsecbrief(d,s): #commentaire a faire 
     
+    if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!netsecbrief"):
+                            
+                            r=praw.Reddit(user_agent='python_bot')
+                            submissions=r.get_subreddit('netsec').get_hot(limit=5)
+                            message = "Les 5 dernieres new hot de reddit sur netsec sont : \n"
+                            s.send("PRIVMSG #resir "+message+"")
+                            for x in submissions: 
+                                message=str(x)+"\n"
+                                s.send("PRIVMSG #resir "+message+"\n")
+   
 
 def run():
     HOST="irc.clubsecu.fr"
@@ -369,7 +384,7 @@ def run():
             sha512(d,s)
             rulesacc(d,s)
             netsec(d,s)
-          
+            netsecbrief(d,s)
             
             
            
