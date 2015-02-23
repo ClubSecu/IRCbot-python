@@ -67,20 +67,19 @@ def answer(d,s):
                     s.send("PRIVMSG %s %s \r\n" %(user,d['msg'])) 
     
 
-def salut(d,s):
+def salut(d,s,NICK):
     user=""
     message=""
-    ope="Nomekrax"
-    opmessage=""
     if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'JOIN'): # je check l'action est bien join
                     user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
-                    #print(user,id)
-                    user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
-                    message = "Bienvenu dans le chat "+user 
-                    target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
-                    s.send("PRIVMSG %s %s \r\n" %(target,message)) #je salue la personne 
+                    print(user)
+                    if (user != ":"+NICK ):
+                        user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
+                        message = "Bienvenu dans le chat "+user 
+                        target=string.lstrip(d['whr'],':') #j'enleve le caracete : de la source
+                        s.send("PRIVMSG %s %s \r\n" %(target,message)) #je salue la personne 
 
                     
 def joinClubSecu(d,s,usersec):
@@ -329,8 +328,8 @@ def run():
             d = readline(line, d)
             print(d)
             #answer(d,s)
-            #salut(d, s)
             
+            salut(d, s,NICK)
             joinClubSecu(d,s,usersec)
             #citationLecture(d, s)
             citationEcriture(d,s)
