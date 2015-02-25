@@ -309,7 +309,7 @@ def netsecbrief(d,s): #commentaire a faire
                 
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
-                        if(d['msg'] == "!netsecbrief"):
+                        if(d['msg'] == "!netsecbrief "):
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('netsec').get_hot(limit=5)
@@ -319,6 +319,46 @@ def netsecbrief(d,s): #commentaire a faire
                                 message=str(x)+"\n"
                                 s.send("PRIVMSG #resir "+message+"\n")
    
+
+def remote(d,s): #commentaire a faire
+     if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    msg1=d['msg'].split(" ")  #on decoupe 
+                    #print(msg1)
+                    #print(len(msg1))
+                    if (msg1[0]=="!remote"):  #ici pour modifier le mode de commande (ici !q)
+                        if (len(msg1) == 3):
+                            
+                           
+                           
+                            message = msg1[1] 
+                           
+                            
+                            s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
+    
+    
+def blackhat(d,s): #commentaire a faire 
+    
+    if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!blackhat "):
+                            
+                            r=praw.Reddit(user_agent='python_bot')
+                            submissions=r.get_subreddit('blackhat').get_hot(limit=5)
+                            message = "Les 5 dernieres new hot de reddit sur blackhat sont : \n"
+                            s.send("PRIVMSG #resir "+message+"")
+                            for x in submissions: 
+                                message=str(x)+"\n"
+                                s.send("PRIVMSG #resir "+message+"\n")
+   
+    
 
 def run():
     HOST="irc.clubsecu.fr"
@@ -385,6 +425,9 @@ def run():
             rulesacc(d,s)
             netsec(d,s)
             netsecbrief(d,s)
+            remote(d,s)
+            blackhat(d,s)
+
             
             
            
