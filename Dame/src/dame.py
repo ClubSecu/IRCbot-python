@@ -9,5 +9,6 @@ __date__ = "$26 fevr. 2015 11:38:42$"
 
 if __name__ == "__main__":
     print "Hello World"
-    toto = DameCore.bot()
-    
+    #toto = DameCore.bot(host = "irc.clubsecu.fr", port = 6667, nick = "Man-Bot",realname="Man-Bot")
+    tata = DameCore.bot()
+    tutu = toto = DameCore.bot(host = "irc.clubsecu.fr", port = 6667, nick = "Child-Bot",realname="Man-Bot")

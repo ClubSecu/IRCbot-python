@@ -60,7 +60,14 @@ class bot:
             return d
     
     
-    def __init__(self):
+    
+    def __init__(self,host = "irc.clubsecu.fr", port = 6667, nick = "Dame-Bot",realname="Dame-Bot"  ):
+        
+        self.HOST=host
+        self.PORT=port
+        self.NICK=nick
+        self.IDENT="BOT"
+        self.REALNAME=realname
         
         self.s=socket.socket( )
         self.s.connect((self.HOST, self.PORT))
