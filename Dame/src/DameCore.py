@@ -60,6 +60,11 @@ class bot:
             return d
     
     
+    def printd():
+        print(self.d)
+        
+                
+    
     
     def __init__(self,host = "irc.clubsecu.fr", port = 6667, nick = "Dame-Bot",realname="Dame-Bot"  ):
         
@@ -85,9 +90,9 @@ class bot:
                 if(line[0]=="PING"):
                     self.s.send("PONG %s\r\n" % line[1])
          #connection a  irc    
-            print(line)
+            #print(line)
             self.d=self.readline(line)
-            print(self.d)
+            #print(self.d)
     
     
     
