@@ -278,9 +278,7 @@ def rulesacc(d,s): #commentaire a changer
     
 
 def netsec(d,s): #commentaire a faire 
-    
 
-      
     
     if (d != None): # je verifie que mon dicto n'est pas vide
             if 'act' in d: #je verifie que mon dictio est bien forme
@@ -333,7 +331,6 @@ def remote(d,s): #commentaire a faire
                         if (len(msg1) == 3):
                             
                            
-                           
                             message = msg1[1] 
                            
                             
@@ -360,6 +357,44 @@ def blackhat(d,s): #commentaire a faire
    
     
 
+def musclor(d,s):
+    if (d != None): # je verifie que mon dicto n'est pas vide
+        if 'act' in d: #je verifie que mon dictio est bien forme
+            if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                if (d['src'][0] == '#'):  #si le message est sur un salon
+                    msg1=d['msg'].split(" ")  #on decoupe 
+                    #print(msg1)
+                    #print(len(msg1))
+                    if (msg1[0]=="!musclor"):  #ici pour modifier le mode de commande (ici !q)
+                        if (len(msg1) == 2):
+                            fichiercitation=open("Musclor","r") # j'ouvre le fichier des citations
+                            citation=fichiercitation.read()  #j'extrait les citations
+                            citation=citation.split("\n")#je les formates dans un tableau 
+                            fichiercitation.close # je ferme le fichier
+                            rand = random.randint(0,len(citation))  #j'en choisis une au hasard
+                            message = citation[rand-1] #je la sauvegarde dans une variable pour traitement ? 
+                            #print(rand)
+                            s.send("PRIVMSG #resir %s \r\n" %(message)) #je l'envoie dans le chan resir
+                        if (len(msg1)>=3): 
+                            user,id = string.split(d['usr'],'!') #je decoupe l'id pour avoir le loggin 
+                            print(user,id)
+                            user=string.lstrip(user,':') # j'enleve le caractere ":" de l'user
+                            msg1.pop(0) #je vire le !q
+                            #print msg1
+                            msg2=""
+                            for i in range(len(msg1)): #je reconcatene le message dans une variable
+                                msg2=msg2+" "+msg1[i]
+                                
+                            #print msg2
+                            msg2=msg2+"\n" #j'ajoute un saut de ligne 
+                            #msg2 = user+" a dit \""+msg2+"\"\n"
+                            fichiercitation=open("Musclor","a") #j'ouvre le ficher en mode "j'ecris apres"
+                            fichiercitation.write(msg2) # j'ecrit le message 
+                            fichiercitation.close
+                            s.send("PRIVMSG #resir Musclor vous salue ! \r\n" ) #affichage sur resir d'un message de confirmation
+
+
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
@@ -383,11 +418,6 @@ def run():
     
     #lecture du ficher contenant les membres du clubs secu et mise de ceux-ci dans un tableau 
     
-    
-    
-    
-
-
 
 
     while 1:
@@ -427,6 +457,7 @@ def run():
             netsecbrief(d,s)
             remote(d,s)
             blackhat(d,s)
+            musclor(d,s)
 
             
             
