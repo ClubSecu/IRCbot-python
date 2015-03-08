@@ -155,7 +155,7 @@ def RevEngineering(d,s): #commentaire a faire
                                 s.send("PRIVMSG #resir "+link+"\n")
                                 
 
-def RevEngineering(d,s): #commentaire a faire 
+def RevEngineeringbrief(d,s): #commentaire a faire 
     
     if (d != None): # je verifie que mon dicto n'est pas vide
             if 'act' in d: #je verifie que mon dictio est bien forme
@@ -176,13 +176,10 @@ def RevEngineering(d,s): #commentaire a faire
 
 
 
-
-
-
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
-    NICK="Sp1p3-Bot"
+    NICK="Reddit-Bot"
     IDENT="BOT"
     REALNAME="Sp1p3-Bot"
     readbuffer=""
@@ -218,8 +215,10 @@ def run():
 
             netsec(d,s)
             netsecbrief(d,s)
-
+            RevEngineering(d,s)
+            RevEngineeringbrief(d,s)
             blackhat(d,s)
+            blackhatbrief(d,s)
 
 if __name__ == "__main__":
    print("hello world")
