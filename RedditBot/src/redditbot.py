@@ -11,9 +11,6 @@ import string
 import os
 import praw  #https://praw.readthedocs.org/en/v2.1.20/ sinon a commenter# #wrapper api reddit
 
-if __name__ == "__main__":
-   print("hello world")
-   redditbot.run()
 
 
 def readline(line,d): #ne gere que PING, PVMSG et JOIN
@@ -224,3 +221,6 @@ def run():
 
             blackhat(d,s)
 
+if __name__ == "__main__":
+   print("hello world")
+   run()
