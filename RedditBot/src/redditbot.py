@@ -101,7 +101,7 @@ def blackhatbrief(d,s): #commentaire a faire
                 
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
-                        if(d['msg'] == "!blackhat "):
+                        if(d['msg'] == "!blackhatbrief "):
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('blackhat').get_hot(limit=5)
@@ -111,6 +111,74 @@ def blackhatbrief(d,s): #commentaire a faire
                                 message=str(x)+"\n"
                                 s.send("PRIVMSG #resir "+message+"\n")
  
+
+
+def blackhat(d,s): #commentaire a faire 
+
+    
+    if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!blackhat "):
+                            
+                            r=praw.Reddit(user_agent='python_bot')
+                            submissions=r.get_subreddit('blackhat').get_hot(limit=5)
+                            message = "Les 5 dernieres new hot de reddit sur netsec sont : \n"
+                            s.send("PRIVMSG #resir "+message+"")
+                            for x in submissions: 
+                                message=str(x)+"\n"
+                                s.send("PRIVMSG #resir "+message+"\n")
+                                link=x.url
+                                s.send("PRIVMSG #resir "+link+"\n")
+                                
+
+def RevEngineering(d,s): #commentaire a faire 
+
+    
+    if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!revengineering "):
+                            
+                            r=praw.Reddit(user_agent='python_bot')
+                            submissions=r.get_subreddit('RevEngineering').get_hot(limit=5)
+                            message = "Les 5 dernieres new hot de reddit sur netsec sont : \n"
+                            s.send("PRIVMSG #resir "+message+"")
+                            for x in submissions: 
+                                message=str(x)+"\n"
+                                s.send("PRIVMSG #resir "+message+"\n")
+                                link=x.url
+                                s.send("PRIVMSG #resir "+link+"\n")
+                                
+
+def RevEngineering(d,s): #commentaire a faire 
+    
+    if (d != None): # je verifie que mon dicto n'est pas vide
+            if 'act' in d: #je verifie que mon dictio est bien forme
+                if (d['act'] == 'PRIVMSG'): # je check l'action est bien message
+                
+                    if (d['src'][0] == '#'):  #si le message est sur un salon
+                   
+                        if(d['msg'] == "!ReverseEngineering "):
+                            
+                            r=praw.Reddit(user_agent='python_bot')
+                            submissions=r.get_subreddit('revengineering').get_hot(limit=5)
+                            message = "Les 5 dernieres new hot de reddit sur blackhat sont : \n"
+                            s.send("PRIVMSG #resir "+message+"")
+                            for x in submissions: 
+                                message=str(x)+"\n"
+                                s.send("PRIVMSG #resir "+message+"\n")
+ 
+
+
+
+
 
 
 def run():
