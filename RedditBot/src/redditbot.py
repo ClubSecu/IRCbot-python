@@ -145,7 +145,7 @@ def RevEngineering(d,s): #commentaire a faire
                         if(d['msg'] == "!revengineering "):
                             
                             r=praw.Reddit(user_agent='python_bot')
-                            submissions=r.get_subreddit('RevEngineering').get_hot(limit=5)
+                            submissions=r.get_subreddit('ReverseEngineering').get_hot(limit=5)
                             message = "Les 5 dernieres new hot de reddit sur netsec sont : \n"
                             s.send("PRIVMSG #resir "+message+"")
                             for x in submissions: 
@@ -163,10 +163,10 @@ def RevEngineeringbrief(d,s): #commentaire a faire
                 
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
-                        if(d['msg'] == "!ReverseEngineering "):
+                        if(d['msg'] == "!revengineeringbrief "):
                             
                             r=praw.Reddit(user_agent='python_bot')
-                            submissions=r.get_subreddit('revengineering').get_hot(limit=5)
+                            submissions=r.get_subreddit('ReverseEngineering').get_hot(limit=5)
                             message = "Les 5 dernieres new hot de reddit sur blackhat sont : \n"
                             s.send("PRIVMSG #resir "+message+"")
                             for x in submissions: 
