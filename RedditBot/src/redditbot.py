@@ -267,5 +267,5 @@ def run():
             malwarebrief(d,s)
 
 if __name__ == "__main__":
-   print("hello world")
+   #print("hello world")
    run()
