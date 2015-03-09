@@ -49,17 +49,21 @@ def readline(line,d): #ne gere que PING, PVMSG et JOIN
 
 
 def help(d,s):
+    info =[]
     if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'PRIVMSG'): # je check l'action est bien message                
                 if (d['src'][0] == '#'):  #si le message est sur un salon                   
                     if(d['msg'] == "!helpreddit "):
-                        message = "Les flux reddit dispo sont : \n"
-                        message = message + "- NetSec \n"
-                        message = message + "- Blackhat \n"
-                        message = message + "- ReverseEngineering \n"
-                        message = message + "- Malware \n"
-                        s.send("PRIVMSG #resir "+message+"")
+                        print("User requested Help section")
+                        info.append("Les flux reddit dispo sont : \n")
+                        info.append("- NetSec : !netsec & !netsecbrief\n")
+                        info.append("- Blackhat : !blackhat & !blackhatbrief\n")
+                        info.append("- ReverseEngineering : !revengineering & revengineeringbrief\n")
+                        info.append("- Malware : !malware & !malwarebrief\n")
+                        for index in range(0, len(info) ):
+                            print(info[index])
+                            s.send("PRIVMSG #resir "+info[index]+"")
 
 
 def netsec(d,s): #commentaire a faire 
@@ -71,6 +75,7 @@ def netsec(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!netsec "):
+                            print("User requested Netsec section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('netsec').get_hot(limit=5)
@@ -92,6 +97,7 @@ def netsecbrief(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!netsecbrief "):
+                            print("User requested Netsec section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('netsec').get_hot(limit=5)
@@ -111,6 +117,7 @@ def blackhat(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!blackhat "):
+                            print("User requested Blackhat section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('blackhat').get_hot(limit=5)
@@ -131,6 +138,7 @@ def blackhatbrief(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!blackhatbrief "):
+                            print("User requested Blackhat section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('blackhat').get_hot(limit=5)
@@ -150,6 +158,7 @@ def RevEngineering(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!revengineering "):
+                            print("User requested ReverseEngineering section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('ReverseEngineering').get_hot(limit=5)
@@ -171,6 +180,7 @@ def RevEngineeringbrief(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!revengineeringbrief "):
+                            print("User requested ReverseEngineering section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('ReverseEngineering').get_hot(limit=5)
@@ -189,6 +199,7 @@ def malware(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!malware "):
+                            print("User requested Malware section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('Malware').get_hot(limit=5)
@@ -210,6 +221,7 @@ def malwarebrief(d,s): #commentaire a faire
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
                         if(d['msg'] == "!revengineeringbrief "):
+                            print("User requested Malware section")
                             
                             r=praw.Reddit(user_agent='python_bot')
                             submissions=r.get_subreddit('Malware').get_hot(limit=5)
@@ -267,5 +279,5 @@ def run():
             malwarebrief(d,s)
 
 if __name__ == "__main__":
-   #print("hello world")
+   print("Starting bot")
    run()
