@@ -48,12 +48,12 @@ def readline(line,d): #ne gere que PING, PVMSG et JOIN
         return d
 
 
-def flux(d,s):
+def help(d,s):
     if (d != None): # je verifie que mon dicto n'est pas vide
         if 'act' in d: #je verifie que mon dictio est bien forme
             if (d['act'] == 'PRIVMSG'): # je check l'action est bien message                
                 if (d['src'][0] == '#'):  #si le message est sur un salon                   
-                    if(d['msg'] == "!flux "):
+                    if(d['msg'] == "!helpreddit "):
                         message = "Les flux reddit dispo sont : \n"
                         message = message + "- NetSec \n"
                         message = message + "- Blackhat \n"
@@ -256,7 +256,7 @@ def run():
             d = readline(line, d)
             #print(d)
 
-            flux(d,s)
+            help(d,s)
             netsec(d,s)
             netsecbrief(d,s)
             RevEngineering(d,s)
