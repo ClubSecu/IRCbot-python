@@ -59,7 +59,7 @@ def help(d,s):
                         info.append("Les flux reddit dispo sont : \n")
                         info.append("- NetSec : !netsec & !netsecbrief\n")
                         info.append("- Blackhat : !blackhat & !blackhatbrief\n")
-                        info.append("- ReverseEngineering : !revengineering & revengineeringbrief\n")
+                        info.append("- ReverseEngineering : !revengineering & !revengineeringbrief\n")
                         info.append("- Malware : !malware & !malwarebrief\n")
                         for index in range(0, len(info) ):
                             print(info[index])
@@ -220,7 +220,7 @@ def malwarebrief(d,s): #commentaire a faire
                 
                     if (d['src'][0] == '#'):  #si le message est sur un salon
                    
-                        if(d['msg'] == "!revengineeringbrief "):
+                        if(d['msg'] == "!malwarebrief "):
                             print("User requested Malware section")
                             
                             r=praw.Reddit(user_agent='python_bot')
