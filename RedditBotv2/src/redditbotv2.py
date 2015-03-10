@@ -98,9 +98,8 @@ def flowreddit(d,s):
                                     brief=1
                                 else:
                                     choice/=2
-                                print("User requested "+topics[choice]+" section")
-                                #debug
-                                if(brief==1): print("Brief option selected")
+                                print("User requested "+topics[choice]+" section")  #debug                               
+                                if(brief==1): print("Brief option selected")        #debug
                                 
                                 r=praw.Reddit(user_agent='python_bot')
                                 submissions=r.get_subreddit(topics[choice]).get_hot(limit=5)
@@ -108,12 +107,12 @@ def flowreddit(d,s):
                                 s.send("PRIVMSG "+d['src']+" "+message+"")
                                 for x in submissions: 
                                     message=str(x)+"\n"                                    
-                                    s.send("PRIVMSG "+d['src']+message+"\n")
+                                    s.send("PRIVMSG "+d['src']+" "+message+"\n")
                                     print(message)  #debug
                                     # If brief option is selected
                                     if(brief == 0):
                                         link=x.url
-                                        s.send("PRIVMSG "+d['src']+link+"\n")
+                                        s.send("PRIVMSG "+d['src']+" "+link+"\n")
     
 def run():
     HOST="irc.clubsecu.fr"
