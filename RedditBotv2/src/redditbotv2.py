@@ -62,7 +62,7 @@ def help(d,s):
                         info.append("- Malware : !malware & !malwarebrief")
                         for index in range(0, len(info) ):
                             print(info[index])
-                            s.send("PRIVMSG #resir "+info[index]+"")
+                            s.send("PRIVMSG #resir "+info[index]+"\n")
 
 def flowreddit(d,s):
     # Initialisation
@@ -109,6 +109,7 @@ def flowreddit(d,s):
                                 for x in submissions: 
                                     message=str(x)+"\n"                                    
                                     s.send("PRIVMSG "+d['src']+message+"\n")
+                                    print(message)  #debug
                                     # If brief option is selected
                                     if(brief == 0):
                                         link=x.url
