@@ -72,13 +72,13 @@ def flowreddit(d,s):
     topics=[]
     
     flux.append("!netsec ")
-    flux.append("!netsecbrief ")    #1
+    flux.append("!netsecbrief ")
     flux.append("!blackhat ")
-    flux.append("!blackhatbrief ")  #3
+    flux.append("!blackhatbrief ")
     flux.append("!reveng ")
-    flux.append("!revengbrief ")    #5
+    flux.append("!revengbrief ")
     flux.append("!malware ")
-    flux.append("!malwarebrief ")   #7
+    flux.append("!malwarebrief ")
     
     topics.append('netsec')
     topics.append('blackhat')
@@ -101,19 +101,22 @@ def flowreddit(d,s):
                                 print("User requested "+topics[choice]+" section")  #debug                               
                                 if(brief==1): print("Brief option selected")        #debug
                                 
-                                r=praw.Reddit(user_agent='python_bot')
-                                submissions=r.get_subreddit(topics[choice]).get_hot(limit=5)
-                                message = "Les 5 dernieres new hot de reddit sur "+topics[choice]+" : \n"
-                                s.send("PRIVMSG "+d['src']+" "+message+"")
-                                for x in submissions: 
-                                    message=str(x)+"\n"                                    
-                                    s.send("PRIVMSG "+d['src']+" "+message+"\n")
-                                    print(message)  #debug
-                                    # If brief option is selected
-                                    if(brief == 0):
-                                        link=x.url
-                                        s.send("PRIVMSG "+d['src']+" "+link+"\n")
-    
+                                getAndPrintSubReddit(d, s, topics, choice, brief)
+                                        
+def getAndPrintSubReddit(d, sock, subList, choice, option):
+    r=praw.Reddit(user_agent='python_bot')
+    submissions=r.get_subreddit(subList[choice]).get_hot(limit=5)
+    message = "Les 5 dernieres new hot de reddit sur "+subList[choice]+" : \n"
+    sock.send("PRIVMSG "+d['src']+" "+message+"")
+    for x in submissions: 
+        message=str(x)+"\n"                                    
+        sock.send("PRIVMSG "+d['src']+" "+message+"\n")
+        print(message)  #debug
+        # If brief option is selected
+        if(option == 0):
+            link=x.url
+            sock.send("PRIVMSG "+d['src']+" "+link+"\n")
+                                        
 def run():
     HOST="irc.clubsecu.fr"
     PORT=6667
