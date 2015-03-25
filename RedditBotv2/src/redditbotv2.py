@@ -62,7 +62,7 @@ def help(d,s):
                         info.append("- Malware : !malware & !malwarebrief")
                         for index in range(0, len(info) ):
                             print(info[index])
-                            s.send("PRIVMSG #resir "+info[index]+"\n")
+                            s.send("PRIVMSG "+d['src']+" "+info[index]+"\n")
 
 def flowreddit(d,s):
     # Initialisation
