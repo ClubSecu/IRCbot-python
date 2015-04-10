@@ -5,7 +5,7 @@
 import re
 import socket
 import string
-from time import gmtime, strftime
+from time import strftime
 
 __author__ = "Fabien"
 __date__ = "$26 mars 2015 17:41:54$"
@@ -28,11 +28,15 @@ class Bot:
         self.buffer = ''
         
         # Triggers !
-        self.trigger = {
+        self.a_trigger = {
                         'Repeat': False,
                         'Record': False,
                         }
-        
+        # Commands
+        self.a_commandlist = {
+                            '?': self.command_help,
+                            'whosmaster': self.command_whosmater,
+                            }
         print 'New bot:' + self.nick
         
     # connect() : connexion to an IRC server
@@ -74,29 +78,29 @@ class Bot:
     def command_ping(self):
         self.match = re.match(r"^PING (.*)$", self.line)
         if self.match:
-            self.s.send('PONG %s\r\n' % self.match(1))
+            self.s.send('PONG %s\r\n' % self.match.group(1))
 
     # trigger_turn(string,string) : turn on or off a trigger
     def trigger_turn(self, trig, turn):
         if trig in self.trigger.keys():
             if turn == 'on':
-                self.trigger[trig] = True
+                self.a_trigger[trig] = True
                 self.s.send('PRIVMSG %s Trigger : %s on\r\n' %(self.chan, trig))
             elif turn == 'off':
-                self.trigger[trig] = False
+                self.a_trigger[trig] = False
                 self.s.send('PRIVMSG %s Trigger : %s off\r\n' %(self.chan, trig))
         else:
             self.s.send("PRIVMSG %s Trigger : %s doesn't existe\r\n" %(self.chan, trig))
         
     # function_repeat() : bot will repeat everything
     def function_repeat(self,line):
-        if self.trigger['Repeat']:
+        if self.a_trigger['Repeat']:
             m = privmsg.match(line) # Get informations about the message
             if m:
                 self.s.send('PRIVMSG %s %s : %s\r\n' % (m.group(2), m.group(1), m.group(3)))
     
     def function_record(self,line):
-        if self.trigger['Record']:
+        if self.a_trigger['Record']:
             self.match = privmsg.match(line) # Get informations about the message
             if self.match:
                 f = open("irc.log", 'a')
@@ -107,10 +111,17 @@ class Bot:
         self.match = privmsg.match(line) # Get informations about the message
         if self.match:
             if self.master == self.match.group(1):
-                master_msg = re.match(r"^(" + bot.nick + r") : ([a-zA-Z]*) ([on|off]*)$",self.match.group(3))
-                if master_msg:
-                    bot.trigger_turn(master_msg.group(2),master_msg.group(3))
-        
+                trigger = re.match(r"^!(" + bot.nick + r") ([a-zA-Z]*) ([on|off]*)$",self.match.group(3))
+                command = re.match(r"^!(" + bot.nick + r") ([a-zA-Z]*)$",self.match.group(3))
+                if trigger:
+                    bot.trigger_turn(trigger.group(2),trigger.group(3))
+                elif command:
+                    bot.command(command.group(2))
+    
+    def command(self,command):
+        if self.a_command_list[command] is not null:
+            self.a_command_list[command]
+            
     # functions() : lauch all functions
     def functions(self,line):
         self.function_repeat(line)
